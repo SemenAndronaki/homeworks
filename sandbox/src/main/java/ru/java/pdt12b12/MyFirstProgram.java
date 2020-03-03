@@ -1,3 +1,5 @@
+package ru.java.pdt12b12;
+
 public class MyFirstProgram {
 
     public static void main(String[] args) {
