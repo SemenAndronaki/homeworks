@@ -1,4 +1,4 @@
-package ru.java.pdt12b12;
+package ru.pdt12b12;
 
 public class MyFirstProgram {
 
