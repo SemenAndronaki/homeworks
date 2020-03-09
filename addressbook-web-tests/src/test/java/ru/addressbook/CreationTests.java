@@ -6,11 +6,11 @@ import org.testng.annotations.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class GroupCreation {
+public class CreationTests {
     private WebDriver wd;
 
     @BeforeMethod(alwaysRun = true)
-    public void setUp() throws Exception {
+    public void setUp() {
         wd = new FirefoxDriver();
         wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         wd.get("http://localhost/addressbook/group.php");
@@ -18,12 +18,50 @@ public class GroupCreation {
     }
 
     @Test
-    public void testGroupCreation() throws Exception {
+    public void testGroupCreation() {
         goToGroupsPage();
         initGroupCreation();
         fillGroupForm(new GroupData("groupName", "groupHeader", "groupFooter"));
         submitGroupCreation();
         returnToGroups();
+    }
+
+    @Test
+    public void testPersonCreation() {
+        goToPersonCreationPage();
+        fillNewPerson(new UserData("first name", "last name", "address", "123", "234@mail.ru"));
+        submitPersonCreation();
+        returnToHomePage();
+    }
+
+    private void submitPersonCreation() {
+        wd.findElement(By.xpath("(//input[@name='submit'])[2]")).click();
+    }
+
+    private void returnToHomePage() {
+        wd.findElement(By.linkText("home page")).click();
+    }
+
+    private void goToPersonCreationPage() {
+        wd.findElement(By.linkText("add new")).click();
+    }
+
+    private void fillNewPerson(UserData userData) {
+        wd.findElement(By.name("firstname")).click();
+        wd.findElement(By.name("firstname")).clear();
+        wd.findElement(By.name("firstname")).sendKeys(userData.getFirstName());
+        wd.findElement(By.name("lastname")).click();
+        wd.findElement(By.name("lastname")).clear();
+        wd.findElement(By.name("lastname")).sendKeys(userData.getLastName());
+        wd.findElement(By.name("address")).click();
+        wd.findElement(By.name("address")).clear();
+        wd.findElement(By.name("address")).sendKeys(userData.getAddress());
+        wd.findElement(By.name("mobile")).click();
+        wd.findElement(By.name("mobile")).clear();
+        wd.findElement(By.name("mobile")).sendKeys(userData.getMobileNumber());
+        wd.findElement(By.name("email")).click();
+        wd.findElement(By.name("email")).clear();
+        wd.findElement(By.name("email")).sendKeys(userData.getEmail());
     }
 
     private void returnToGroups() {
