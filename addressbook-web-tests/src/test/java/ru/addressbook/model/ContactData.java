@@ -1,13 +1,13 @@
-package ru.addressbook;
+package ru.addressbook.model;
 
-public class UserData {
+public class ContactData {
     private final String firstName;
     private final String lastName;
     private final String address;
     private final String mobileNumber;
     private final String email;
 
-    public UserData(String firstName, String lastName, String address, String mobileNumber, String email) {
+    public ContactData(String firstName, String lastName, String address, String mobileNumber, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
