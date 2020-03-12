@@ -24,4 +24,12 @@ public class NavigationHelper extends HelperBase {
     public void goToGroupsPage() {
         click(By.linkText("groups"));
     }
+
+    public void clickEditContactButton() {
+        click(By.xpath("//img[@alt='Edit']"));
+    }
+
+    public void goToHomepage() {
+        click(By.linkText("home"));
+    }
 }
