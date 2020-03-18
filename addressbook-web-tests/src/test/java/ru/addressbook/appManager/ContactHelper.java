@@ -2,6 +2,8 @@ package ru.addressbook.appManager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.addressbook.model.ContactData;
 
 public class ContactHelper extends HelperBase {
@@ -14,9 +16,14 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("(//input[@name='submit'])[2]"));
     }
 
-    public void fillContactData(ContactData contactData) {
+    public void fillContactData(ContactData contactData, boolean creation) {
         type(contactData.getFirstName(), By.name("firstname"));
         type(contactData.getLastName(), By.name("lastname"));
+        if(creation){
+            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+        } else {
+            Assert.assertFalse(isElementPresent(By.name("new_group")));
+        }
         type(contactData.getAddress(), By.name("address"));
         type(contactData.getMobileNumber(), By.name("mobile"));
         type(contactData.getEmail(), By.name("email"));

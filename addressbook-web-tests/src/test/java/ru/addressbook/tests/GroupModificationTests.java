@@ -8,8 +8,9 @@ public class GroupModificationTests extends TestBase {
     @Test
     public void testGroupModification() {
         app.getNavigationHelper().goToGroupsPage();
+        app.getGroupHelper().selectGroupToEdit();
         app.getGroupHelper().initGroupModification();
-        app.getGroupHelper().fillGroupForm(new GroupData("new groupName", "new groupHeader", " new groupFooter"));
+        app.getGroupHelper().fillGroupForm(new GroupData("new groupName", null, "groupFooter"));
         app.getGroupHelper().submitGroupUpdate();
         app.getNavigationHelper().returnToGroups();
     }

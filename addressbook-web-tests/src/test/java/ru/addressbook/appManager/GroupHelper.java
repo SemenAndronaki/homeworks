@@ -24,6 +24,10 @@ public class GroupHelper extends HelperBase {
         type(groupData.getGroupFooter(), By.name("group_footer"));
     }
 
+    public void selectGroupToEdit(){
+        click(By.name("selected[]"));
+    }
+
     public void initGroupModification() {
         click(By.name("edit"));
     }
