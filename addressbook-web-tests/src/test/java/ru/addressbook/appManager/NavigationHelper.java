@@ -9,16 +9,8 @@ public class NavigationHelper extends HelperBase {
         super(wd);
     }
 
-    public void returnToHomePage() {
-        click(By.linkText("home page"));
-    }
-
     public void goToPersonCreationPage() {
         click(By.linkText("add new"));
-    }
-
-    public void returnToGroups() {
-        click(By.linkText("group page"));
     }
 
     public void goToGroupsPage() {
@@ -30,9 +22,7 @@ public class NavigationHelper extends HelperBase {
         click(By.linkText("groups"));
     }
 
-    public void clickEditContactButton() {
-        click(By.xpath("//img[@alt='Edit']"));
-    }
+
 
     public void goToHomepage() {
         if (isElementPresent(By.id("maintable"))) {

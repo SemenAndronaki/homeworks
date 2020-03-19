@@ -23,9 +23,23 @@ public class GroupHelper extends HelperBase {
         type(groupData.getGroupHeader(), By.name("group_header"));
         type(groupData.getGroupFooter(), By.name("group_footer"));
     }
+    public void returnToGroupPage() {
+        click(By.linkText("group page"));
+    }
+
+    public void createGroup(GroupData groupData){
+        initGroupCreation();
+        fillGroupForm(groupData);
+        submitGroupCreation();
+        returnToGroupPage();
+    }
 
     public void selectGroupToEdit(){
         click(By.name("selected[]"));
+    }
+
+    public boolean isThereGroup(){
+        return isElementPresent(By.name("selected[]"));
     }
 
     public void initGroupModification() {
