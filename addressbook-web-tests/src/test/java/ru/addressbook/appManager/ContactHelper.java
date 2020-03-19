@@ -2,9 +2,12 @@ package ru.addressbook.appManager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.addressbook.model.ContactData;
+
+import java.util.List;
 
 public class ContactHelper extends HelperBase {
 
@@ -20,7 +23,10 @@ public class ContactHelper extends HelperBase {
         type(contactData.getFirstName(), By.name("firstname"));
         type(contactData.getLastName(), By.name("lastname"));
         if (creation) {
-            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+            List<WebElement> groups = wd.findElement(By.name("new_group")).findElements(By.linkText(contactData.getGroup()));
+            if (groups.size() != 0) {
+                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+            }
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
