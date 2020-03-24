@@ -2,7 +2,11 @@ package ru.addressbook.appManager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import ru.addressbook.model.GroupData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GroupHelper extends HelperBase {
 
@@ -23,22 +27,19 @@ public class GroupHelper extends HelperBase {
         type(groupData.getGroupHeader(), By.name("group_header"));
         type(groupData.getGroupFooter(), By.name("group_footer"));
     }
+
     public void returnToGroupPage() {
         click(By.linkText("group page"));
     }
 
-    public void createGroup(GroupData groupData){
+    public void createGroup(GroupData groupData) {
         initGroupCreation();
         fillGroupForm(groupData);
         submitGroupCreation();
         returnToGroupPage();
     }
 
-    public void selectGroupToEdit(){
-        click(By.name("selected[]"));
-    }
-
-    public boolean isThereGroup(){
+    public boolean isThereGroup() {
         return isElementPresent(By.name("selected[]"));
     }
 
@@ -50,11 +51,21 @@ public class GroupHelper extends HelperBase {
         click(By.name("update"));
     }
 
-    public void selectGroup() {
-        click(By.name("selected[]"));
+    public void selectGroup(int i) {
+        wd.findElements(By.name("selected[]")).get(i).click();
     }
 
-    public void clickDeleteGroup() {
+    public void deleteSelectedGroup() {
         click(By.name("delete"));
+    }
+
+    public List<GroupData> getGroupList() {
+        List<GroupData> groups = new ArrayList<>();
+        List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
+        for (WebElement element : elements) {
+            groups.add(new GroupData(element.getText(), null, null,
+                    Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"))));
+        }
+        return groups;
     }
 }
