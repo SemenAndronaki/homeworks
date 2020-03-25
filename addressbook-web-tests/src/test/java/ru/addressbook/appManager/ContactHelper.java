@@ -63,6 +63,13 @@ public class ContactHelper extends HelperBase {
         returnToHomePage();
     }
 
+    public void modifyContact(int index, ContactData newContactData) {
+        clickEditContactButton(index);
+        fillContactData(newContactData, false);
+        submitContactUpdate();
+        returnToHomePage();
+    }
+
     public void clickEditContactButton(int i) {
         wd.findElements(By.xpath("//img[@alt='Edit']")).get(i).click();
     }
@@ -79,7 +86,7 @@ public class ContactHelper extends HelperBase {
             List<WebElement> elementCell = element.findElements(By.cssSelector("td"));
             int id = Integer.parseInt(elementCell.get(0).findElement(By.tagName("input")).getAttribute("id"));
             contacts.add(new ContactData(elementCell.get(2).getText(), elementCell.get(1).getText(), elementCell.get(3).getText(),
-                    elementCell.get(5).getText(),elementCell.get(4).getText(), id));
+                    elementCell.get(5).getText(), elementCell.get(4).getText(), id));
         }
         return contacts;
     }
