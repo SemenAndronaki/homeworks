@@ -14,8 +14,8 @@ public class ContactDeletionTest extends TestBase {
         app.getNavigationHelper().goToHomepage();
         if (!app.getContactHelper().isContactHere()) {
             app.getNavigationHelper().goToPersonCreationPage();
-            app.getContactHelper().contactCreation(new ContactData("first name", "last name",
-                    "address", "123", "234@mail.ru", "groupName"));
+            app.getContactHelper().contactCreation(new ContactData().withFirstName("first name").withLastName("last name")
+                    .withAddress("address").withMobileNumber("123").withEmail("234@mail.ru").withGroup("groupName"));
         }
     }
 
