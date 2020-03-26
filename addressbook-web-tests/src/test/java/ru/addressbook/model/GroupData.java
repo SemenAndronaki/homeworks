@@ -3,28 +3,29 @@ package ru.addressbook.model;
 import java.util.Objects;
 
 public class GroupData {
-    private final String groupName;
-    private final String groupHeader;
-    private final String groupFooter;
+    private String groupName;
+    private String groupHeader;
+    private String groupFooter;
+    private int groupId = Integer.MAX_VALUE;
 
-    public void setGroupId(int groupId) {
+    public GroupData withGroupId(int groupId) {
         this.groupId = groupId;
+        return this;
     }
 
-    private int groupId;
-
-    public GroupData(String groupName, String groupHeader, String groupFooter) {
+    public GroupData withGroupName(String groupName) {
         this.groupName = groupName;
-        this.groupHeader = groupHeader;
-        this.groupFooter = groupFooter;
-        this.groupId = Integer.MAX_VALUE;
+        return this;
     }
 
-    public GroupData(String groupName, String groupHeader, String groupFooter, int groupId) {
-        this.groupName = groupName;
+    public GroupData withGroupHeader(String groupHeader) {
         this.groupHeader = groupHeader;
+        return this;
+    }
+
+    public GroupData withGroupFooter(String groupFooter) {
         this.groupFooter = groupFooter;
-        this.groupId = groupId;
+        return this;
     }
 
     public String getGroupName() {

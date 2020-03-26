@@ -21,9 +21,7 @@ public class NavigationHelper extends HelperBase {
         }
         click(By.linkText("groups"));
     }
-
-
-
+    
     public void goToHomepage() {
         if (isElementPresent(By.id("maintable"))) {
             return;
