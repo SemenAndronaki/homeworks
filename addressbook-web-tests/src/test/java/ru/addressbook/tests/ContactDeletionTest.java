@@ -5,8 +5,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.addressbook.model.ContactData;
 
-import java.util.HashSet;
-import java.util.List;
+import java.util.Set;
 
 public class ContactDeletionTest extends TestBase {
     @BeforeMethod
@@ -21,15 +20,14 @@ public class ContactDeletionTest extends TestBase {
 
     @Test
     public void testContactDeletion() {
-        List<ContactData> before = app.getContactHelper().getContactList();
-        app.getContactHelper().selectContact(before.size() - 1);
-        app.getContactHelper().clickDeleteContacts();
-        app.getContactHelper().closePopupWindow();
+        Set<ContactData> before = app.getContactHelper().getContacts();
+        ContactData contact = before.iterator().next();
+        app.getContactHelper().deleteContact(contact);
         app.getNavigationHelper().goToHomepage();
-        List<ContactData> after = app.getContactHelper().getContactList();
+        Set<ContactData> after = app.getContactHelper().getContacts();
         Assert.assertEquals(after.size(), before.size() - 1);
 
-        before.remove(before.size() - 1);
-        Assert.assertEquals(new HashSet<>(after), new HashSet<>(before));
+        before.remove(contact);
+        Assert.assertEquals(after, before);
     }
 }

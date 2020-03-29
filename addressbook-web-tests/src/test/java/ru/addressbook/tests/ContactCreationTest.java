@@ -4,8 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import ru.addressbook.model.ContactData;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 public class ContactCreationTest extends TestBase {
 
@@ -15,16 +14,14 @@ public class ContactCreationTest extends TestBase {
                 .withAddress("address").withMobileNumber("123").withEmail("234@mail.ru").withGroup("groupName");
 
         app.getNavigationHelper().goToHomepage();
-        List<ContactData> before = app.getContactHelper().getContactList();
+        Set<ContactData> before = app.getContactHelper().getContacts();
         app.getNavigationHelper().goToPersonCreationPage();
         app.getContactHelper().contactCreation(contactData);
-        List<ContactData> after = app.getContactHelper().getContactList();
+        Set<ContactData> after = app.getContactHelper().getContacts();
         Assert.assertEquals(after.size(), before.size() + 1);
 
-        Comparator<? super ContactData> byId = (o1, o2) -> Integer.compare(o1.getId(), o2.getId());
-        before.add(contactData.withId(after.stream().max(byId).get().getId()));
-        before.sort(byId);
-        after.sort(byId);
+        contactData.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt());
+        before.add(contactData);
         Assert.assertEquals(after, before);
     }
 }
