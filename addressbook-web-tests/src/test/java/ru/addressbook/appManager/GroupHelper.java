@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.addressbook.model.GroupData;
+import ru.addressbook.model.Groups;
 
 import java.util.HashSet;
 import java.util.List;
@@ -70,11 +71,14 @@ public class GroupHelper extends HelperBase {
         click(By.name("delete"));
     }
 
-    public Set<GroupData> getGroupSet() {
-        Set<GroupData> groups = new HashSet<>();
+    public Groups getGroups() {
+       Groups groups = new Groups();
         List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
         for (WebElement element : elements) {
-            groups.add(new GroupData().withGroupName(element.getText()).withGroupId(Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"))));
+            String name = element.getText();
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+            GroupData group = new GroupData().withGroupName(name).withGroupId(id).withGroupHeader(null).withGroupFooter(null);
+            groups.add(group);
         }
         return groups;
     }

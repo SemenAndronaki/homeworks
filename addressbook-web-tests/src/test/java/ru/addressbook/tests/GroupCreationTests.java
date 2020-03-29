@@ -1,25 +1,25 @@
 package ru.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.*;
 import ru.addressbook.model.GroupData;
+import ru.addressbook.model.Groups;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupCreationTests extends TestBase {
 
     @Test
     public void testGroupCreation() {
         app.getNavigationHelper().goToGroupsPage();
-        Set<GroupData> before = app.getGroupHelper().getGroupSet();
-        GroupData groupData = new GroupData().withGroupName("groupName").withGroupHeader("groupHeader").withGroupFooter("groupFooter");
-        app.getGroupHelper().createGroup(groupData);
+        Groups before = app.getGroupHelper().getGroups();
+        GroupData group = new GroupData().withGroupName("groupName").withGroupHeader("groupHeader").withGroupFooter("groupFooter");
+        app.getGroupHelper().createGroup(group);
 
-        Set<GroupData> after = app.getGroupHelper().getGroupSet();
-        Assert.assertEquals(after.size(), before.size() + 1);
+        Groups after = app.getGroupHelper().getGroups();
+        assertThat(after.size(), equalTo(before.size() + 1));
 
-        groupData.withGroupId(after.stream().mapToInt((g) -> g.getGroupId()).max().getAsInt());
-        before.add(groupData);
-        Assert.assertEquals(after, before);
+        assertThat(after, equalTo(before.
+                withAdded(group.withGroupId(after.stream().mapToInt((g) -> g.getGroupId()).max().getAsInt()))));
     }
 }
