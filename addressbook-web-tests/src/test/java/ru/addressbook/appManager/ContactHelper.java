@@ -117,4 +117,8 @@ public class ContactHelper extends HelperBase {
         }
         return new Contacts(contactCache);
     }
+
+    public int getContactsCount() {
+        return wd.findElements(By.cssSelector("#maintable > tbody > tr")).size() - 1;
+    }
 }

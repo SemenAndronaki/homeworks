@@ -6,6 +6,7 @@ import ru.addressbook.model.Contacts;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import org.testng.Assert;
 
 public class ContactCreationTest extends TestBase {
 
@@ -18,9 +19,9 @@ public class ContactCreationTest extends TestBase {
         Contacts before = app.getContactHelper().getContacts();
         app.getNavigationHelper().goToPersonCreationPage();
         app.getContactHelper().contactCreation(contactData);
-        Contacts after = app.getContactHelper().getContacts();
 
-        assertThat(after.size(), equalTo(before.size() + 1));
+        assertThat(app.getContactHelper().getContactsCount(), equalTo(before.size() + 1));
+        Contacts after = app.getContactHelper().getContacts();
         assertThat(after, equalTo(before.withAdded(contactData.withId((after.stream().mapToInt((c) -> c.getId()).max().getAsInt())))));
     }
 }

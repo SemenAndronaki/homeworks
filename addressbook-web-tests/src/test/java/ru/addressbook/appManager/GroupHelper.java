@@ -88,4 +88,8 @@ public class GroupHelper extends HelperBase {
         }
         return new Groups(groupCache);
     }
+
+    public int getGroupCount() {
+        return wd.findElements(By.cssSelector("span.group")).size();
+    }
 }
