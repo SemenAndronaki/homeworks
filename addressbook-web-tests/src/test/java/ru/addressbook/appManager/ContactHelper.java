@@ -8,9 +8,7 @@ import org.testng.Assert;
 import ru.addressbook.model.ContactData;
 import ru.addressbook.model.Contacts;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -38,7 +36,7 @@ public class ContactHelper extends HelperBase {
         type(contactData.getEmail(), By.name("email"));
     }
 
-    public void submitContactUpdate() {
+    public void submitContactModification() {
         click(By.xpath("(//input[@name='update'])[2]"));
     }
 
@@ -61,19 +59,22 @@ public class ContactHelper extends HelperBase {
     public void contactCreation(ContactData contactData) {
         fillContactData(contactData, true);
         submitContactCreation();
+        contactCache = null;
         returnToHomePage();
     }
 
     public void modifyContact(ContactData contact) {
         clickEditContactButton(contact.getId());
         fillContactData(contact, false);
-        submitContactUpdate();
+        submitContactModification();
+        contactCache = null;
         returnToHomePage();
     }
 
     public void deleteContact(ContactData contact) {
         selectContact(contact.getId());
         clickDeleteContacts();
+        contactCache = null;
         closePopupWindow();
     }
 
@@ -94,8 +95,13 @@ public class ContactHelper extends HelperBase {
         return isElementPresent(By.xpath("//img[@alt='Edit']"));
     }
 
+    private Contacts contactCache = null;
+
     public Contacts getContacts() {
-        Contacts contacts = new Contacts();
+        if (contactCache != null) {
+            return new Contacts(contactCache);
+        }
+        contactCache = new Contacts();
         List<WebElement> elements = wd.findElements(By.cssSelector("#maintable > tbody > tr"));
         elements.remove(0);
         for (WebElement element : elements) {
@@ -106,9 +112,9 @@ public class ContactHelper extends HelperBase {
             String address = elementCell.get(3).getText();
             String email = elementCell.get(4).getText();
             String mobileNumber = elementCell.get(5).getText();
-            contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName)
+            contactCache.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName)
                     .withAddress(address).withEmail(email).withMobileNumber(mobileNumber));
         }
-        return contacts;
+        return new Contacts(contactCache);
     }
 }

@@ -3,9 +3,9 @@ package ru.addressbook.appManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.annotations.Test;
 import ru.addressbook.model.GroupData;
 import ru.addressbook.model.Groups;
+
 import java.util.List;
 
 public class GroupHelper extends HelperBase {
@@ -36,6 +36,7 @@ public class GroupHelper extends HelperBase {
         initGroupCreation();
         fillGroupForm(groupData);
         submitGroupCreation();
+        groupCache = null;
         returnToGroupPage();
     }
 
@@ -43,13 +44,15 @@ public class GroupHelper extends HelperBase {
         selectGroupById(newGroupData.getGroupId());
         initGroupModification();
         fillGroupForm(newGroupData);
-        submitGroupUpdate();
+        submitGroupModification();
+        groupCache = null;
         returnToGroupPage();
     }
 
     public void deleteGroup(GroupData group) {
         selectGroupById(group.getGroupId());
         deleteSelectedGroup();
+        groupCache = null;
         returnToGroupPage();
     }
 
@@ -57,7 +60,7 @@ public class GroupHelper extends HelperBase {
         click(By.name("edit"));
     }
 
-    public void submitGroupUpdate() {
+    public void submitGroupModification() {
         click(By.name("update"));
     }
 
@@ -69,15 +72,20 @@ public class GroupHelper extends HelperBase {
         click(By.name("delete"));
     }
 
+    private Groups groupCache = null;
+
     public Groups getGroups() {
-       Groups groups = new Groups();
+        if (groupCache != null) {
+            return new Groups(groupCache);
+        }
+        groupCache = new Groups();
         List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
         for (WebElement element : elements) {
             String name = element.getText();
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             GroupData group = new GroupData().withGroupName(name).withGroupId(id).withGroupHeader(null).withGroupFooter(null);
-            groups.add(group);
+            groupCache.add(group);
         }
-        return groups;
+        return new Groups(groupCache);
     }
 }
