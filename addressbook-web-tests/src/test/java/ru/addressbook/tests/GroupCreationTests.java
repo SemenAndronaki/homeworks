@@ -1,6 +1,6 @@
 package ru.addressbook.tests;
 
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 import ru.addressbook.model.GroupData;
 import ru.addressbook.model.Groups;
 

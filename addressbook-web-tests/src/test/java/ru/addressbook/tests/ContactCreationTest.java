@@ -1,10 +1,11 @@
 package ru.addressbook.tests;
 
-import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 import ru.addressbook.model.ContactData;
+import ru.addressbook.model.Contacts;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTest extends TestBase {
 
@@ -14,14 +15,12 @@ public class ContactCreationTest extends TestBase {
                 .withAddress("address").withMobileNumber("123").withEmail("234@mail.ru").withGroup("groupName");
 
         app.getNavigationHelper().goToHomepage();
-        Set<ContactData> before = app.getContactHelper().getContacts();
+        Contacts before = app.getContactHelper().getContacts();
         app.getNavigationHelper().goToPersonCreationPage();
         app.getContactHelper().contactCreation(contactData);
-        Set<ContactData> after = app.getContactHelper().getContacts();
-        Assert.assertEquals(after.size(), before.size() + 1);
+        Contacts after = app.getContactHelper().getContacts();
 
-        contactData.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt());
-        before.add(contactData);
-        Assert.assertEquals(after, before);
+        assertThat(after.size(), equalTo(before.size() + 1));
+        assertThat(after, equalTo(before.withAdded(contactData.withId((after.stream().mapToInt((c) -> c.getId()).max().getAsInt())))));
     }
 }
