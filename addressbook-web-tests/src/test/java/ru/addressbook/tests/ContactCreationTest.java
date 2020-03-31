@@ -6,7 +6,6 @@ import ru.addressbook.model.Contacts;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import org.testng.Assert;
 
 public class ContactCreationTest extends TestBase {
 
