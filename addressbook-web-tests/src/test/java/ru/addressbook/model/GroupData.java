@@ -1,11 +1,20 @@
 package ru.addressbook.model;
 
+import com.google.gson.annotations.Expose;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import java.util.Objects;
 
+@XStreamAlias("group")
 public class GroupData {
+    @Expose
     private String groupName;
+    @Expose
     private String groupHeader;
+    @Expose
     private String groupFooter;
+    @XStreamOmitField
     private int groupId = Integer.MAX_VALUE;
 
     public GroupData withGroupId(int groupId) {

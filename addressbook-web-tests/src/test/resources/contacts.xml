@@ -1,0 +1,23 @@
+<list>
+  <contact>
+    <firstName>first name 0</firstName>
+    <lastName>last name 0</lastName>
+    <address>address 0</address>
+    <mobileNumber>+7(962) 0</mobileNumber>
+    <email>234@mail.ru</email>
+  </contact>
+  <contact>
+    <firstName>first name 1</firstName>
+    <lastName>last name 1</lastName>
+    <address>address 1</address>
+    <mobileNumber>+7(962) 1</mobileNumber>
+    <email>234@mail.ru</email>
+  </contact>
+  <contact>
+    <firstName>first name 2</firstName>
+    <lastName>last name 2</lastName>
+    <address>address 2</address>
+    <mobileNumber>+7(962) 2</mobileNumber>
+    <email>234@mail.ru</email>
+  </contact>
+</list>

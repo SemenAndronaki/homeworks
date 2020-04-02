@@ -1,15 +1,28 @@
 package ru.addressbook.model;
 
+import com.google.gson.annotations.Expose;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
+import java.io.File;
 import java.util.Objects;
 
+@XStreamAlias("contact")
 public class ContactData {
+    @XStreamOmitField
+    private int id;
+    @Expose
     private String firstName;
+    @Expose
     private String lastName;
+    @Expose
     private String address;
     private String secondaryAddress;
+    @Expose
     private String mobileNumber;
     private String homeNumber;
     private String workNumber;
+    @Expose
     private String email;
     private String email2;
     private String email3;
@@ -17,8 +30,12 @@ public class ContactData {
     private String allPhones;
     private String allAddresses;
     private String allEmails;
+    @Expose
+    private File photo;
 
-    private int id;
+    public File getPhoto() {
+        return photo;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -180,6 +197,11 @@ public class ContactData {
 
     public ContactData withAllEmails(String allEmails) {
         this.allEmails = allEmails;
+        return this;
+    }
+
+    public ContactData withPhoto(File photo) {
+        this.photo = photo;
         return this;
     }
 }
