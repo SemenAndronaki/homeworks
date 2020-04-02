@@ -21,9 +21,11 @@ public class ContactData {
     @Expose
     private String mobileNumber;
     private String homeNumber;
+    @Expose
     private String workNumber;
     @Expose
     private String email;
+    @Expose
     private String email2;
     private String email3;
     private String group;
@@ -31,6 +33,7 @@ public class ContactData {
     private String allAddresses;
     private String allEmails;
     @Expose
+    private String filepath;
     private File photo;
 
     public File getPhoto() {
@@ -97,6 +100,10 @@ public class ContactData {
         return email3;
     }
 
+    public String getFilepath() {
+        return filepath;
+    }
+
     @Override
     public String toString() {
         return "ContactData{" +
@@ -123,6 +130,11 @@ public class ContactData {
     @Override
     public int hashCode() {
         return Objects.hash(firstName, lastName, id);
+    }
+
+    public ContactData withFilepath(String filepath) {
+        this.filepath = filepath;
+        return this;
     }
 
     public ContactData withFirstName(String firstName) {

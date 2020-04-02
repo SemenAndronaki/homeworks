@@ -4,29 +4,20 @@
     <lastName>last name 0</lastName>
     <address>address 0</address>
     <mobileNumber>+7(962) 0</mobileNumber>
-    <workNumber>+7(812) 0</workNumber>
-    <email>email1@mail.ru</email>
-    <email2>email2@mail.ru</email2>
-    <filepath>src/test/resources/img.jpg</filepath>
+    <email>234@mail.ru</email>
   </contact>
   <contact>
     <firstName>first name 1</firstName>
     <lastName>last name 1</lastName>
     <address>address 1</address>
     <mobileNumber>+7(962) 1</mobileNumber>
-    <workNumber>+7(812) 1</workNumber>
-    <email>email1@mail.ru</email>
-    <email2>email2@mail.ru</email2>
-    <filepath>src/test/resources/img.jpg</filepath>
+    <email>234@mail.ru</email>
   </contact>
   <contact>
     <firstName>first name 2</firstName>
     <lastName>last name 2</lastName>
     <address>address 2</address>
     <mobileNumber>+7(962) 2</mobileNumber>
-    <workNumber>+7(812) 2</workNumber>
-    <email>email1@mail.ru</email>
-    <email2>email2@mail.ru</email2>
-    <filepath>src/test/resources/img.jpg</filepath>
+    <email>234@mail.ru</email>
   </contact>
 </list>
