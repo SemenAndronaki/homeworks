@@ -13,7 +13,7 @@ public class ContactDeletionTest extends TestBase {
     public void ensurePrecondition() {
         app.getNavigationHelper().goToHomepage();
         if (!app.getContactHelper().isContactHere()) {
-            app.getNavigationHelper().goToPersonCreationPage();
+            app.getNavigationHelper().goToContactCreationPage();
             app.getContactHelper().contactCreation(new ContactData().withFirstName("first name").withLastName("last name")
                     .withAddress("address").withMobileNumber("123").withEmail("234@mail.ru").withGroup("groupName"));
         }

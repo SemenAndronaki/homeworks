@@ -23,6 +23,7 @@ public class ContactHelper extends HelperBase {
     public void fillContactData(ContactData contactData, boolean creation) {
         type(contactData.getFirstName(), By.name("firstname"));
         type(contactData.getLastName(), By.name("lastname"));
+        attach(contactData.getPhoto(), By.name("photo"));
         if (creation) {
             List<WebElement> groups = wd.findElement(By.name("new_group")).findElements(By.linkText(contactData.getGroup()));
             if (groups.size() != 0) {

@@ -9,7 +9,7 @@ public class NavigationHelper extends HelperBase {
         super(wd);
     }
 
-    public void goToPersonCreationPage() {
+    public void goToContactCreationPage() {
         click(By.linkText("add new"));
     }
 

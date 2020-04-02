@@ -15,7 +15,7 @@ public class ContactDataCheckTest extends TestBase {
     public void ensurePrecondition() {
         app.getNavigationHelper().goToHomepage();
         if (!app.getContactHelper().isContactHere()) {
-            app.getNavigationHelper().goToPersonCreationPage();
+            app.getNavigationHelper().goToContactCreationPage();
             app.getContactHelper().contactCreation(new ContactData().withFirstName("first name").withLastName("last name")
                     .withAddress("address").withSecondaryAddress("address2").withMobileNumber("+7(111)").withHomeNumber("111-111")
                     .withWorkNumber("111 111").withEmail("email1@mail.ru").withEmail2("email2@mail.ru")
