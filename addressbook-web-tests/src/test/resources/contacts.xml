@@ -7,6 +7,7 @@
     <workNumber>+7(812) 0</workNumber>
     <email>email1@mail.ru</email>
     <email2>email2@mail.ru</email2>
+    <group>name 0</group>
     <filepath>src/test/resources/img.jpg</filepath>
   </contact>
   <contact>
@@ -17,6 +18,7 @@
     <workNumber>+7(812) 1</workNumber>
     <email>email1@mail.ru</email>
     <email2>email2@mail.ru</email2>
+    <group>name 0</group>
     <filepath>src/test/resources/img.jpg</filepath>
   </contact>
   <contact>
@@ -27,6 +29,7 @@
     <workNumber>+7(812) 2</workNumber>
     <email>email1@mail.ru</email>
     <email2>email2@mail.ru</email2>
+    <group>name 0</group>
     <filepath>src/test/resources/img.jpg</filepath>
   </contact>
 </list>
