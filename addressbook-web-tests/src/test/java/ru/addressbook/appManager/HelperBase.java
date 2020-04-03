@@ -20,9 +20,9 @@ public class HelperBase {
 
     protected void type(String text, By locator) {
         click(locator);
-        if (text != null){
+        if (text != null) {
             String existingText = wd.findElement(locator).getAttribute("value");
-            if (!text.equals(existingText)){
+            if (!text.equals(existingText)) {
                 wd.findElement(locator).clear();
                 wd.findElement(locator).sendKeys(text);
             }
@@ -30,7 +30,7 @@ public class HelperBase {
     }
 
     protected void attach(File file, By locator) {
-        if (file != null){
+        if (file != null) {
             wd.findElement(locator).clear();
             wd.findElement(locator).sendKeys(file.getAbsolutePath());
         }

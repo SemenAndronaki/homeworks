@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import ru.addressbook.model.ContactData;
 import ru.addressbook.model.Contacts;
 
+import static org.awaitility.Awaitility.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -26,7 +27,7 @@ public class ContactDeletionTest extends TestBase {
         app.getContactHelper().deleteContact(contact);
         app.getNavigationHelper().goToHomepage();
 
-        assertThat(app.getContactHelper().getContactsCount(), equalTo(before.size() - 1));
+        await().until(() -> app.getContactHelper().getContactsCount() == (before.size() - 1));
         Contacts after = app.getContactHelper().getContacts();
         assertThat(after, equalTo(before.without(contact)));
     }
