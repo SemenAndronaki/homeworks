@@ -26,3 +26,5 @@ build/
 hs_err_pid*
 .idea/workspace.xml
 .idea/misc.xml
+addressbook-web-tests/src/test/resources/contacts.json
+addressbook-web-tests/out/test/resources/contacts.json

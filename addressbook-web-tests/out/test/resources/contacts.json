@@ -20,16 +20,5 @@
     "email2": "email2@mail.ru",
     "group": "name 0",
     "filepath": "src/test/resources/img.jpg"
-  },
-  {
-    "firstName": "first name 2",
-    "lastName": "last name 2",
-    "address": "address 2",
-    "mobileNumber": "+7(962) 2",
-    "workNumber": "+7(812) 2",
-    "email": "email1@mail.ru",
-    "email2": "email2@mail.ru",
-    "group": "name 0",
-    "filepath": "src/test/resources/img.jpg"
   }
 ]
