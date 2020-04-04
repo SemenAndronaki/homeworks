@@ -7,8 +7,7 @@
     "workNumber": "+7(812) 0",
     "email": "email1@mail.ru",
     "email2": "email2@mail.ru",
-    "group": "name 0",
-    "filepath": "src/test/resources/img.jpg"
+    "photo": "src\\test\\resources\\img.jpg"
   },
   {
     "firstName": "first name 1",
@@ -18,7 +17,6 @@
     "workNumber": "+7(812) 1",
     "email": "email1@mail.ru",
     "email2": "email2@mail.ru",
-    "group": "name 0",
-    "filepath": "src/test/resources/img.jpg"
+    "photo": "src\\test\\resources\\img.jpg"
   }
 ]

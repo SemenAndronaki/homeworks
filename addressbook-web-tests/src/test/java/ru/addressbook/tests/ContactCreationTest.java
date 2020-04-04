@@ -58,7 +58,7 @@ public class ContactCreationTest extends TestBase {
         app.getNavigationHelper().goToHomepage();
         Contacts before = app.getContactHelper().getContacts();
         app.getNavigationHelper().goToContactCreationPage();
-        app.getContactHelper().contactCreation(contactData.withPhoto(new File(contactData.getFilepath())));
+        app.getContactHelper().contactCreation(contactData.withPhoto(contactData.getPhoto()));
 
         assertThat(app.getContactHelper().getContactsCount(), equalTo(before.size() + 1));
         Contacts after = app.getContactHelper().getContacts();

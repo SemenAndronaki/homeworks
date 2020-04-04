@@ -3,42 +3,73 @@ package ru.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 import java.util.Objects;
 
 @XStreamAlias("contact")
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
+    @Id
+    @Column(name = "id")
     @XStreamOmitField
     private int id;
+
     @Expose
+    @Column(name = "firstName")
     private String firstName;
+
     @Expose
+    @Column(name = "lastName")
     private String lastName;
+
     @Expose
+    @Column(name = "address")
+    @Type(type = "text")
     private String address;
-    private String secondaryAddress;
+
     @Expose
+    @Column(name = "mobile")
+    @Type(type = "text")
     private String mobileNumber;
+
+    @Column(name = "home")
+    @Type(type = "text")
     private String homeNumber;
+
     @Expose
+    @Column(name = "work")
+    @Type(type = "text")
     private String workNumber;
+
     @Expose
+    @Column(name = "email")
+    @Type(type = "text")
     private String email;
+
     @Expose
+    @Column(name = "email2")
+    @Type(type = "text")
     private String email2;
-    private String email3;
+
     @Expose
-    private String group;
-    private String allPhones;
-    private String allAddresses;
-    private String allEmails;
+    @Column(name = "photo")
+    @Type(type = "text")
+    private String photo;
+
     @Expose
-    private String filepath;
-    private File photo;
+    transient private String group;
+    transient private String email3;
+    transient private String secondaryAddress;
+    transient private String allPhones;
+    transient private String allAddresses;
+    transient private String allEmails;
 
     public File getPhoto() {
-        return photo;
+        return new File(photo);
     }
 
     public String getFirstName() {
@@ -101,10 +132,6 @@ public class ContactData {
         return email3;
     }
 
-    public String getFilepath() {
-        return filepath;
-    }
-
     @Override
     public String toString() {
         return "ContactData{" +
@@ -131,11 +158,6 @@ public class ContactData {
     @Override
     public int hashCode() {
         return Objects.hash(firstName, lastName, id);
-    }
-
-    public ContactData withFilepath(String filepath) {
-        this.filepath = filepath;
-        return this;
     }
 
     public ContactData withFirstName(String firstName) {
@@ -214,7 +236,7 @@ public class ContactData {
     }
 
     public ContactData withPhoto(File photo) {
-        this.photo = photo;
+        this.photo = photo.getPath();
         return this;
     }
 }
