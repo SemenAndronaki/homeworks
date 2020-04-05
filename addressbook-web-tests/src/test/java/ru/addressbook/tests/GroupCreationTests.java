@@ -53,12 +53,13 @@ public class GroupCreationTests extends TestBase {
 
     @Test(dataProvider = "validGroupsFromXML")
     public void testGroupCreation(GroupData group) {
+        Groups before = app.getDbHelper().groups();
+
         app.getNavigationHelper().goToGroupsPage();
-        Groups before = app.getGroupHelper().getGroups();
         app.getGroupHelper().createGroup(group);
 
         assertThat(app.getGroupHelper().getGroupCount(), equalTo(before.size() + 1));
-        Groups after = app.getGroupHelper().getGroups();
+        Groups after = app.getDbHelper().groups();
         assertThat(after, equalTo(before.
                 withAdded(group.withGroupId(after.stream().mapToInt((g) -> g.getGroupId()).max().getAsInt()))));
     }
