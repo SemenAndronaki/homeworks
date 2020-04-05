@@ -3,8 +3,6 @@ package ru.addressbook.tests;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.addressbook.model.ContactData;
@@ -33,8 +31,8 @@ public class ContactCreationTest extends TestBase {
             }
             XStream xStream = new XStream();
             xStream.processAnnotations(ContactData.class);
-            List<ContactData> groups = (List<ContactData>) xStream.fromXML(xml);
-            return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
+            List<ContactData> contacts = (List<ContactData>) xStream.fromXML(xml);
+            return contacts.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
         }
     }
 
@@ -48,20 +46,20 @@ public class ContactCreationTest extends TestBase {
                 line = reader.readLine();
             }
             Gson gson = new Gson();
-            List<ContactData> groups = gson.fromJson(json, new TypeToken<List<ContactData>>() {}.getType());
-            return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
+            List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>() {}.getType());
+            return contacts.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
         }
     }
 
     @Test(dataProvider = "validContactsFromJson")
     public void testContactCreation(ContactData contactData) {
-        app.getNavigationHelper().goToHomepage();
-        Contacts before = app.getContactHelper().getContacts();
+        Contacts before = app.getDbHelper().contacts();
+
         app.getNavigationHelper().goToContactCreationPage();
         app.getContactHelper().contactCreation(contactData.withPhoto(contactData.getPhoto()));
 
         assertThat(app.getContactHelper().getContactsCount(), equalTo(before.size() + 1));
-        Contacts after = app.getContactHelper().getContacts();
+        Contacts after = app.getDbHelper().contacts();
         assertThat(after, equalTo(before.withAdded(contactData.withId((after.stream().mapToInt((c) -> c.getId()).max().getAsInt())))));
     }
 }
