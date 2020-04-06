@@ -3,7 +3,9 @@ package ru.addressbook.tests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.addressbook.model.ContactData;
+import ru.addressbook.model.Groups;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -12,14 +14,19 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactDataCheckTest extends TestBase {
     @BeforeMethod
-    public void ensurePrecondition() {
+    public void ensurePrecondition() throws IOException {
+        if (app.getDbHelper().groups().size() == 0) {
+            app.getNavigationHelper().goToGroupsPage();
+            app.getGroupHelper().createGroup(app.getTestDataHelper().readGroupsFromXml().get(0));
+        }
+        Groups groups = app.getDbHelper().groups();
         app.getNavigationHelper().goToHomepage();
         if (!app.getContactHelper().isContactHere()) {
             app.getNavigationHelper().goToContactCreationPage();
             app.getContactHelper().contactCreation(new ContactData().withFirstName("first name").withLastName("last name")
                     .withAddress("address").withSecondaryAddress("address2").withMobileNumber("+7(111)").withHomeNumber("111-111")
                     .withWorkNumber("111 111").withEmail("email1@mail.ru").withEmail2("email2@mail.ru")
-                    .withEmail3("email3@mail.ru").withGroup("groupName"));
+                    .withEmail3("email3@mail.ru").inGroup(groups.iterator().next()));
         }
     }
 
