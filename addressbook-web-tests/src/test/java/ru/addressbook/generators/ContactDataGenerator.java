@@ -72,7 +72,7 @@ public class ContactDataGenerator {
             contacts.add(new ContactData().withFirstName(String.format("first name %s", i)).withLastName(String.format("last name %s", i))
                     .withAddress(String.format("address %s", i)).withMobileNumber(String.format("+7(962) %s", i))
                     .withWorkNumber(String.format("+7(812) %s", i)).withEmail(String.format("email1@mail.ru", i)).
-                            withEmail2(String.format("email2@mail.ru", i)).withPhoto(new File("src/test/resources/img.jpg")).withGroup("name 0"));
+                            withEmail2(String.format("email2@mail.ru", i)).withPhoto(new File("src/test/resources/img.jpg")));
         }
         return contacts;
     }
