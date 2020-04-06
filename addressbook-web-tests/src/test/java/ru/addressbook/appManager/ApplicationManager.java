@@ -23,6 +23,8 @@ public class ApplicationManager {
     private String browser;
     private DbHelper dbHelper;
 
+    private TestDataHelper testDataHelper;
+
     public ApplicationManager(String browser) {
         this.browser = browser;
         properties = new Properties();
@@ -33,6 +35,7 @@ public class ApplicationManager {
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
 
         dbHelper = new DbHelper();
+        testDataHelper = new TestDataHelper();
 
         if (browser.equals(BrowserType.FIREFOX)) {
             wd = new FirefoxDriver();
@@ -67,5 +70,9 @@ public class ApplicationManager {
 
     public DbHelper getDbHelper() {
         return dbHelper;
+    }
+
+    public TestDataHelper getTestDataHelper() {
+        return testDataHelper;
     }
 }

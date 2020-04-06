@@ -6,6 +6,7 @@ import ru.addressbook.model.ContactData;
 import ru.addressbook.model.Contacts;
 
 import java.io.File;
+import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -13,10 +14,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ContactModificationTest extends TestBase {
 
     @BeforeMethod
-    public void ensurePrecondition() {
+    public void ensurePrecondition() throws IOException {
         if (app.getDbHelper().contacts().size() == 0) {
             app.getNavigationHelper().goToContactCreationPage();
-            app.getContactHelper().contactCreation(new ContactData().withFirstName("first name").withLastName("last name")
+            app.getContactHelper().contactCreation(app.getTestDataHelper().readContactsFromXml().get(0));
         }
     }
 
