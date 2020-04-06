@@ -15,7 +15,6 @@ public class ContactDeletionTest extends TestBase {
         if (app.getDbHelper().contacts().size() == 0) {
             app.getNavigationHelper().goToContactCreationPage();
             app.getContactHelper().contactCreation(new ContactData().withFirstName("first name").withLastName("last name")
-                    .withAddress("address").withMobileNumber("123").withEmail("234@mail.ru").withGroup("groupName"));
         }
     }
 
@@ -31,5 +30,6 @@ public class ContactDeletionTest extends TestBase {
         await().until(() -> app.getContactHelper().getContactsCount() == (before.size() - 1));
         Contacts after = app.getDbHelper().contacts();
         assertThat(after, equalTo(before.without(contact)));
+        verifyContactsListInUi();
     }
 }
