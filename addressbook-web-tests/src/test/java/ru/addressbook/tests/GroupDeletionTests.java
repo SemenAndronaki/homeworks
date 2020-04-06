@@ -5,6 +5,8 @@ import org.testng.annotations.Test;
 import ru.addressbook.model.GroupData;
 import ru.addressbook.model.Groups;
 
+import java.io.IOException;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
@@ -12,11 +14,10 @@ import static org.testng.Assert.assertEquals;
 
 public class GroupDeletionTests extends TestBase {
     @BeforeMethod
-    public void ensurePrecondition() {
+    public void ensurePrecondition() throws IOException {
         if (app.getDbHelper().groups().size() == 0) {
             app.getNavigationHelper().goToGroupsPage();
-            app.getGroupHelper().createGroup(new GroupData().withGroupName("groupName")
-                    .withGroupHeader("groupHeader").withGroupFooter("groupFooter"));
+            app.getGroupHelper().createGroup(app.getTestDataHelper().readGroupsFromXml().get(0));
         }
     }
 
