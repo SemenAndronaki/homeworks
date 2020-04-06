@@ -15,10 +15,6 @@ public class ContactModificationTest extends TestBase {
 
     @BeforeMethod
     public void ensurePrecondition() throws IOException {
-        if (app.getDbHelper().groups().size() == 0) {
-            app.getNavigationHelper().goToGroupsPage();
-            app.getGroupHelper().createGroup(app.getTestDataHelper().readGroupsFromXml().get(0));
-        }
         if (app.getDbHelper().contacts().size() == 0) {
             app.getNavigationHelper().goToContactCreationPage();
             app.getContactHelper().contactCreation(app.getTestDataHelper().readContactsFromXml().get(0));

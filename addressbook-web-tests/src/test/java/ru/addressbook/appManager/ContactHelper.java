@@ -24,16 +24,6 @@ public class ContactHelper extends HelperBase {
         type(contactData.getFirstName(), By.name("firstname"));
         type(contactData.getLastName(), By.name("lastname"));
         attach(contactData.getPhoto(), By.name("photo"));
-        if (creation) {
-            if (contactData.getGroup() != null){
-                List<WebElement> groups = wd.findElement(By.name("new_group")).findElements(By.linkText(contactData.getGroup()));
-                if (groups.size() != 0) {
-                    new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-                }
-            }
-        } else {
-            Assert.assertFalse(isElementPresent(By.name("new_group")));
-        }
         type(contactData.getHomeNumber(), By.name("home"));
         type(contactData.getWorkNumber(), By.name("work"));
         type(contactData.getAddress(), By.name("address"));
@@ -42,6 +32,15 @@ public class ContactHelper extends HelperBase {
         type(contactData.getEmail3(), By.name("email3"));
         type(contactData.getEmail2(), By.name("email2"));
         type(contactData.getSecondaryAddress(), By.name("address2"));
+
+        if (creation) {
+            if (contactData.getGroups().size() > 0) {
+                Assert.assertTrue(contactData.getGroups().size() == 1);
+                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getGroupName());
+            }
+        } else {
+            Assert.assertFalse(isElementPresent(By.name("new_group")));
+        }
     }
 
     public void submitContactModification() {
