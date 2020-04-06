@@ -8,10 +8,16 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import ru.addressbook.appManager.ApplicationManager;
+import ru.addressbook.model.GroupData;
+import ru.addressbook.model.Groups;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class TestBase {
 
@@ -31,12 +37,22 @@ public class TestBase {
     }
 
     @BeforeMethod(alwaysRun = true)
-    public void logTestStart(Method method, Object[] params){
+    public void logTestStart(Method method, Object[] params) {
         logger.info(String.format("Started test %s with parameters %s", method.getName(), Arrays.asList(params)));
     }
 
     @AfterMethod(alwaysRun = true)
-    public void logTestStop(Method method, Object[] params){
+    public void logTestStop(Method method, Object[] params) {
         logger.info(String.format("Stop test %s with parameters %s", method.getName(), Arrays.asList(params)));
+    }
+
+    public void verifyGroupListInUi() {
+        if (Boolean.getBoolean("verifyUi")) {
+            Groups groupsDB = app.getDbHelper().groups();
+            Groups groupsUI = app.getGroupHelper().getGroups();
+            assertThat(groupsUI, equalTo(groupsDB.stream()
+                    .map((g) -> new GroupData().withGroupName(g.getGroupName()).withGroupId(g.getGroupId()))
+                    .collect(Collectors.toSet())));
+        }
     }
 }
