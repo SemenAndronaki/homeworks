@@ -57,16 +57,4 @@ public class TestBase {
                     .collect(Collectors.toSet())));
         }
     }
-
-    public void verifyContactsListInUi() {
-        if (Boolean.getBoolean("verifyUi")) {
-            Contacts contactsDB = app.getDbHelper().contacts();
-            Contacts contactsUI = app.getContactHelper().getContacts();
-            assertThat(contactsUI, equalTo(contactsDB.stream()
-                    .map((g) -> new ContactData().withFirstName(g.getFirstName()).withLastName(g.getLastName())
-                    .withAddress(g.getAddress()).withEmail(g.getEmail()).withEmail2(g.getEmail2())
-                    .withMobileNumber(g.getMobileNumber()).withWorkNumber(g.getWorkNumber()))
-                    .collect(Collectors.toSet())));
-        }
-    }
 }
