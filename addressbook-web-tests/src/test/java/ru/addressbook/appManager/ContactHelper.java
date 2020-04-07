@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.addressbook.model.ContactData;
 import ru.addressbook.model.Contacts;
+import ru.addressbook.model.GroupData;
 
 import java.util.List;
 
@@ -135,5 +136,28 @@ public class ContactHelper extends HelperBase {
         return new ContactData().withFirstName(firstName).withLastName(lastName).withHomeNumber(home)
                 .withWorkNumber(work).withMobileNumber(mobile).withEmail(email1).withEmail2(email2)
                 .withEmail3(email3).withAddress(address);
+    }
+
+    public void addContactToGroup(int id, GroupData group) {
+        selectContact(id);
+        selectGroup(group.getGroupId());
+        click(By.name("add"));
+        returnToHomepageWithSelectedGroup(group.getGroupName());
+    }
+
+    public void returnToHomepageWithSelectedGroup(String groupName){
+        click(By.linkText(String.format("group page \"%s\"", groupName)));
+    }
+
+    private void selectGroup(int groupId) {
+        new Select(wd.findElement(By.name("to_group"))).selectByValue(String.valueOf(groupId));
+    }
+    
+    public void selectAddressbookForGroup(GroupData group) {
+        new Select(wd.findElement(By.name("group"))).selectByValue(String.valueOf(group.getGroupId()));
+    }
+
+    public void clickRemoveContact() {
+        click(By.name("remove"));
     }
 }
