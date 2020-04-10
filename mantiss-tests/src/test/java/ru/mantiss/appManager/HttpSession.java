@@ -29,12 +29,11 @@ public class HttpSession {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("username", username));
         params.add(new BasicNameValuePair("password", password));
-        params.add(new BasicNameValuePair("secure_session", "on"));
         params.add(new BasicNameValuePair("return", "index.php"));
         post.setEntity(new UrlEncodedFormEntity(params));
         CloseableHttpResponse response = httpClient.execute(post);
         String body = getTextFrom(response);
-        return body.contains(String.format("<a href=\"/mantisbt-2.24.0/mantisbt-2.24.0/account_page.php\">%s</a>", username));
+        return body.contains(String.format("<span class=\"user-info\">%s</span>", username));
     }
 
     private String getTextFrom(CloseableHttpResponse response) throws IOException {

@@ -19,6 +19,8 @@
         <option name="useQualifiedModuleNames" value="true" />
       </GradleProjectSettings>
       <GradleProjectSettings>
+        <option name="delegatedBuild" value="false" />
+        <option name="testRunner" value="PLATFORM" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/mantiss-tests" />
         <option name="gradleHome" value="$USER_HOME$/Downloads/gradle-4.8.1-bin/gradle-4.8.1" />
