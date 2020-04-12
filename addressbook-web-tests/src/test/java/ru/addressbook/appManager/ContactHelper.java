@@ -49,7 +49,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void selectContact(int id) {
-        wd.findElement(By.cssSelector(String.format("input[value='%s']", id))).click();
+        click(By.cssSelector(String.format("input[value='%s']", id)));
     }
 
     public void clickDeleteContacts() {

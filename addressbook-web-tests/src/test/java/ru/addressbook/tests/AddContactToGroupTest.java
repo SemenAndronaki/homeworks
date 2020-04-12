@@ -17,7 +17,7 @@ public class AddContactToGroupTest extends TestBase {
     public void ensurePrecondition() throws IOException {
         Groups groups = app.getDbHelper().groups();
         Contacts contacts = app.getDbHelper().contacts();
-        if (groups.size() == 0 || contacts.stream().filter((c) -> c.getGroups().equals(groups))
+        if (groups.size() == 0 || contacts.stream().filter((c) -> c.getGroups().size() == groups.size())
                 .collect(Collectors.toList()).size() == contacts.size() && contacts.size() != 0) {
             app.getNavigationHelper().goToGroupsPage();
             app.getGroupHelper().createGroup(app.getTestDataHelper().readGroupsFromXml().get(0));
@@ -32,10 +32,9 @@ public class AddContactToGroupTest extends TestBase {
     public void testAddContactToGroup() {
         Groups groups = app.getDbHelper().groups();
         Contacts contacts = app.getDbHelper().contacts();
-        ContactData contact = contacts.stream().filter((c) -> !c.getGroups().equals(groups))
-                .collect(Collectors.toList()).get(0);
-        GroupData group = groups.stream().filter((g) -> !contact.getGroups().contains(g))
-                .collect(Collectors.toList()).get(0);
+
+        ContactData contact = contacts.stream().filter((c) -> !c.getGroups().equals(groups)).findFirst().get();
+        GroupData group = groups.stream().filter((g) -> !contact.getGroups().contains(g)).findFirst().get();
 
         app.getNavigationHelper().goToHomepage();
         app.getContactHelper().addContactToGroup(contact.getId(), group);
