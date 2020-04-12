@@ -15,7 +15,10 @@ public class ApplicationManager {
     private final Properties properties;
     private WebDriver wd;
     private String browser;
-    private RegistrationHelper registrationHelper;
+    private LoginHelper loginHelper;
+    private MailHelper mailHelper;
+    private ChangePasswordHelper changePasswordHelper;
+    private NavigationHelper navigationHelper;
 
     public ApplicationManager(String browser) {
         this.browser = browser;
@@ -41,11 +44,25 @@ public class ApplicationManager {
         return new HttpSession(this);
     }
 
-    public RegistrationHelper registration() {
-        if (registrationHelper == null) {
-            registrationHelper = new RegistrationHelper(this);
+    public LoginHelper loginHelper() {
+        if (loginHelper == null) {
+            loginHelper = new LoginHelper(this);
         }
-        return registrationHelper;
+        return loginHelper;
+    }
+
+    public ChangePasswordHelper changePasswordHelper() {
+        if (changePasswordHelper == null) {
+            changePasswordHelper = new ChangePasswordHelper(this);
+        }
+        return changePasswordHelper;
+    }
+
+    public NavigationHelper navigationHelper() {
+        if (navigationHelper == null) {
+            navigationHelper = new NavigationHelper(this);
+        }
+        return navigationHelper;
     }
 
     public WebDriver getDriver() {
@@ -61,4 +78,10 @@ public class ApplicationManager {
         return wd;
     }
 
+    public MailHelper mail() {
+        if (mailHelper == null) {
+            mailHelper = new MailHelper(this);
+        }
+        return mailHelper;
+    }
 }
