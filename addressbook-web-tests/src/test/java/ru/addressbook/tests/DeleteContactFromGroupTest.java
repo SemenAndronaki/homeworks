@@ -9,23 +9,27 @@ import ru.addressbook.model.Groups;
 import ru.addressbook.model.GroupData;
 
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.stream.Collectors;
 
 public class DeleteContactFromGroupTest extends TestBase {
 
     @BeforeMethod
     public void ensurePrecondition() throws IOException {
-        Contacts contacts = app.getDbHelper().contacts();
         if (app.getDbHelper().groups().size() == 0) {
             app.getNavigationHelper().goToGroupsPage();
             app.getGroupHelper().createGroup(app.getTestDataHelper().readGroupsFromXml().get(0));
         }
-        if (contacts.size() == 0 ||
-                contacts.stream().filter((c) -> !(c.getGroups().size() == 0)).collect(Collectors.toList()).size() == 0) {
+        if (app.getDbHelper().contacts().size() == 0) {
             app.getNavigationHelper().goToContactCreationPage();
             app.getContactHelper().contactCreation(app.getTestDataHelper().readContactsFromXml().get(0)
                     .inGroup(app.getDbHelper().groups().iterator().next()));
+        }
+        if (app.getDbHelper().contacts().stream().filter((c) -> !(c.getGroups().size() == 0))
+                .collect(Collectors.toList()).size() == 0) {
+
+            app.getNavigationHelper().goToHomepage();
+            app.getContactHelper().addContactToGroup(app.getDbHelper().contacts().iterator().next().getId(),
+                    app.getDbHelper().groups().iterator().next());
         }
     }
 
