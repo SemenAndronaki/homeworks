@@ -13,13 +13,10 @@ import java.util.Set;
 import static org.testng.Assert.assertEquals;
 
 public class CreateIssueSoapTests extends TestBase {
-    @BeforeMethod
-    public void skipTest() throws RemoteException, ServiceException, MalformedURLException {
-        skipIfNotFixed(1);
-    }
 
     @Test
     public void testCreateIssue() throws MalformedURLException, ServiceException, RemoteException {
+        skipIfNotFixed(1);
         Set<Project> projects = app.soap().getProjects();
         Issue issue = new Issue().withSummary("Test issue")
                 .withDescription("Test issue description").withProject(projects.iterator().next());
