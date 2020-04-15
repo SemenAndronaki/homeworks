@@ -9,14 +9,16 @@ import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
 
-public class RestTest {
+public class RestTest extends TestBase{
     @Test
     public void testCreateIssue() throws IOException {
-        RestHelper restHelper = new RestHelper();
-        Set<Issie> oldIssues = restHelper.getIssues();
+        skipIfNotFixed(2560);
+        Set<Issie> oldIssues = app.rest().getIssues();
         Issie newIssue = new Issie().withSubject("Test issue" + System.currentTimeMillis()).withDescription("Test issue description");
-        int id = restHelper.createIssue(newIssue);
-        Set<Issie> newIssues = restHelper.getIssues();
-        assertEquals(oldIssues.add(newIssue.withId(id)), newIssues);
+        int id =  app.rest().createIssue(newIssue);
+        Set<Issie> newIssues =  app.rest().getIssues();
+
+        oldIssues.add(newIssue.withId(id));
+        assertEquals(oldIssues, newIssues);
     }
 }

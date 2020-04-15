@@ -1,7 +1,6 @@
 package ru.rest.appManager;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
@@ -12,13 +11,17 @@ import org.apache.http.message.BasicNameValuePair;
 import ru.rest.model.Issie;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Set;
 
 public class RestHelper {
+    private final ApplicationManager app;
+
+    public RestHelper(ApplicationManager app) {
+        this.app = app;
+    }
 
     public int createIssue(Issie newIssie) throws IOException {
-        String json = getExecutor().execute(Request.Post("https://bugify.stqa.ru/api/issues.json")
+        String json = getExecutor().execute(Request.Post(app.getProperty("url.issues")+"?limit=500")
                 .bodyForm(new BasicNameValuePair("subject", newIssie.getSubject()),
                         new BasicNameValuePair("description", newIssie.getDescription())))
                 .returnContent().asString();
@@ -27,7 +30,7 @@ public class RestHelper {
     }
 
     public Set<Issie> getIssues() throws IOException {
-        Response response = getExecutor().execute(Request.Get("https://bugify.stqa.ru/api/issues.json"));
+        Response response = getExecutor().execute(Request.Get(app.getProperty("url.issues")+"?limit=500"));
         String json = response.returnContent().asString();
         JsonElement parsed = JsonParser.parseString(json);
         JsonElement issues = parsed.getAsJsonObject().get("issues");
@@ -35,14 +38,10 @@ public class RestHelper {
     }
 
     private Executor getExecutor() {
-        return Executor.newInstance().auth("288f44776e7bec4bf44fdfeb1e646490", "");
+        return Executor.newInstance().auth(app.getProperty("username"), app.getProperty("password"));
     }
 
     public String getIssueResolutionById(int issueId) throws IOException {
-        Response response = getExecutor().execute(Request.Get(String.format("https://bugify.stqa.ru/api/issues/%s.json", issueId)));
-        String json = response.returnContent().asString();
-        JsonArray issueInfo = Arrays.asList(JsonParser.parseString(json).getAsJsonObject().get("issues").getAsJsonArray()).stream()
-                .filter((issue) -> issue.getAsJsonObject().get("id").getAsInt() == issueId).findFirst().get();
-        return issueInfo.getAsJsonObject().get("state_name").getAsString();
+        return getIssues().stream().filter((issue) -> issue.getId() == issueId).findFirst().get().getState();
     }
 }
