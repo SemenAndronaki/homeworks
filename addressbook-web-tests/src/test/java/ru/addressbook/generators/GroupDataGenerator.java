@@ -59,7 +59,7 @@ public class GroupDataGenerator {
         }
     }
 
-    private void saveAsXml(List<GroupData> groups, File file) throws IOException {
+    private void saveAsXml(List<GroupData> groups, File file) throws IOException  {
         XStream xStream = new XStream();
         xStream.processAnnotations(GroupData.class);
         String xml = xStream.toXML(groups);
