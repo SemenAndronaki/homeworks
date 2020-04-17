@@ -8,7 +8,7 @@ import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.fluent.Response;
 import org.apache.http.message.BasicNameValuePair;
-import ru.rest.model.Issie;
+import ru.rest.model.Issue;
 
 import java.io.IOException;
 import java.util.Set;
@@ -20,8 +20,8 @@ public class RestHelper {
         this.app = app;
     }
 
-    public int createIssue(Issie newIssie) throws IOException {
-        String json = getExecutor().execute(Request.Post(app.getProperty("url.issues")+"?limit=500")
+    public int createIssue(Issue newIssie) throws IOException {
+        String json = getExecutor().execute(Request.Post(app.getProperty("url.issues") + "?limit=500")
                 .bodyForm(new BasicNameValuePair("subject", newIssie.getSubject()),
                         new BasicNameValuePair("description", newIssie.getDescription())))
                 .returnContent().asString();
@@ -29,12 +29,20 @@ public class RestHelper {
         return parsed.getAsJsonObject().get("issue_id").getAsInt();
     }
 
-    public Set<Issie> getIssues() throws IOException {
-        Response response = getExecutor().execute(Request.Get(app.getProperty("url.issues")+"?limit=500"));
+    public Set<Issue> getIssues() throws IOException {
+        Response response = getExecutor().execute(Request.Get(app.getProperty("url.issues") + ".json" + "?limit=500"));
         String json = response.returnContent().asString();
         JsonElement parsed = JsonParser.parseString(json);
         JsonElement issues = parsed.getAsJsonObject().get("issues");
-        return new Gson().fromJson(issues, new TypeToken<Set<Issie>>() {}.getType());
+        return new Gson().fromJson(issues, new TypeToken<Set<Issue>>() {}.getType());
+    }
+
+    public Issue getIssueById(int id) throws IOException {
+        Response response = getExecutor().execute(Request.Get(String.format(app.getProperty("url.issues")+"/%s.json", id)));
+        String json = response.returnContent().asString();
+        JsonElement parsed = JsonParser.parseString(json);
+        JsonElement issuesJson = parsed.getAsJsonObject().get("issues");
+        return ((Set<Issue>) (new Gson().fromJson(issuesJson, new TypeToken<Set<Issue>>() {}.getType()))).iterator().next();
     }
 
     private Executor getExecutor() {
@@ -42,6 +50,6 @@ public class RestHelper {
     }
 
     public String getIssueResolutionById(int issueId) throws IOException {
-        return getIssues().stream().filter((issue) -> issue.getId() == issueId).findFirst().get().getState();
+        return getIssueById(issueId).getState();
     }
 }

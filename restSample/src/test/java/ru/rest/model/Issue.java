@@ -2,7 +2,7 @@ package ru.rest.model;
 
 import java.util.Objects;
 
-public class Issie {
+public class Issue {
 
     private int id;
     private String description;
@@ -17,10 +17,10 @@ public class Issie {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Issie issie = (Issie) o;
-        return id == issie.id &&
-                Objects.equals(description, issie.description) &&
-                Objects.equals(subject, issie.subject);
+        Issue issue = (Issue) o;
+        return id == issue.id &&
+                Objects.equals(description, issue.description) &&
+                Objects.equals(subject, issue.subject);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class Issie {
         return id;
     }
 
-    public Issie withId(int id) {
+    public Issue withId(int id) {
         this.id = id;
         return this;
     }
@@ -41,7 +41,7 @@ public class Issie {
         return description;
     }
 
-    public Issie withDescription(String description) {
+    public Issue withDescription(String description) {
         this.description = description;
         return this;
     }
@@ -50,7 +50,7 @@ public class Issie {
         return subject;
     }
 
-    public Issie withSubject(String subject) {
+    public Issue withSubject(String subject) {
         this.subject = subject;
         return this;
     }

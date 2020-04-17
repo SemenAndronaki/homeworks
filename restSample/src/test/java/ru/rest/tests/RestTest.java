@@ -1,9 +1,7 @@
 package ru.rest.tests;
 
 import org.testng.annotations.Test;
-import ru.rest.appManager.RestHelper;
-import ru.rest.model.Issie;
-
+import ru.rest.model.Issue;
 import java.io.IOException;
 import java.util.Set;
 
@@ -13,10 +11,10 @@ public class RestTest extends TestBase{
     @Test
     public void testCreateIssue() throws IOException {
         skipIfNotFixed(2560);
-        Set<Issie> oldIssues = app.rest().getIssues();
-        Issie newIssue = new Issie().withSubject("Test issue" + System.currentTimeMillis()).withDescription("Test issue description");
+        Set<Issue> oldIssues = app.rest().getIssues();
+        Issue newIssue = new Issue().withSubject("Test issue" + System.currentTimeMillis()).withDescription("Test issue description");
         int id =  app.rest().createIssue(newIssue);
-        Set<Issie> newIssues =  app.rest().getIssues();
+        Set<Issue> newIssues =  app.rest().getIssues();
 
         oldIssues.add(newIssue.withId(id));
         assertEquals(oldIssues, newIssues);
