@@ -1,13 +1,17 @@
 package ru.addressbook.appManager;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.BrowserType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -37,11 +41,18 @@ public class ApplicationManager {
         dbHelper = new DbHelper();
         testDataHelper = new TestDataHelper();
 
-        if (browser.equals(BrowserType.FIREFOX)) {
-            wd = new FirefoxDriver();
-        } else if (browser.equals(BrowserType.CHROME)) {
-            wd = new ChromeDriver();
+        if (properties.getProperty("selenium.server").equals("")) {
+            if (browser.equals(BrowserType.FIREFOX)) {
+                wd = new FirefoxDriver();
+            } else if (browser.equals(BrowserType.CHROME)) {
+                wd = new ChromeDriver();
+            }
+        } else {
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.setBrowserName(browser);
+            wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
         }
+
         wd.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         wd.get(properties.getProperty("web.baseUrl"));
         groupHelper = new GroupHelper(wd);
